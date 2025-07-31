@@ -1,0 +1,99 @@
+<mat-card class="article-card" [class.has-discount]="hasDiscount">
+  <!-- Badge promo -->
+  @if (showPromoBadge && hasDiscount) {
+    <div class="promo-badge">
+      -{{ discountPercentage }}%
+    </div>
+  }
+
+  <!-- Image -->
+  <div class="image-container">
+    <img 
+      mat-card-image 
+      [src]="article.image" 
+      [alt]="article.title"
+      (error)="onImageError($event)"
+      loading="lazy">
+  </div>
+
+  <!-- Contenu -->
+  <mat-card-header>
+    <mat-card-title [title]="article.title">{{ article.title }}</mat-card-title>
+    <mat-card-subtitle>{{ article.category | titlecase }}</mat-card-subtitle>
+  </mat-card-header>
+
+  <mat-card-content>
+    <p class="description">{{ article.description }}</p>
+
+    <!-- Prix -->
+    <div class="price-container">
+      <div class="current-price">
+        {{ discountedPrice | currency:'EUR':'symbol':'1.2-2':'fr-FR' }}
+      </div>
+      @if (hasDiscount) {
+        <div class="original-price">
+          {{ article.fullPrice | currency:'EUR':'symbol':'1.2-2':'fr-FR' }}
+        </div>
+      }
+    </div>
+
+    <!-- Caractéristiques -->
+    @if (article.features && article.features.length > 0) {
+      <div class="features-container">
+        <h4>Caractéristiques :</h4>
+        <div class="features-list">
+          <mat-chip-set>
+            @for (feature of article.features; track feature.title) {
+              <mat-chip>
+                <mat-icon>{{ feature.icon }}</mat-icon>
+                {{ feature.title }}
+              </mat-chip>
+            }
+          </mat-chip-set>
+        </div>
+      </div>
+    }
+  </mat-card-content>
+
+  <!-- Boutons -->
+  <mat-card-actions align="end">
+    <button 
+      mat-button 
+      color="primary"
+      (click)="toggleDetails()"
+      class="details-btn"
+      [attr.aria-expanded]="showDetails"
+      [attr.aria-label]="showDetails ? 'Masquer les détails' : 'Afficher les détails'">
+      <mat-icon>{{ showDetails ? 'expand_less' : 'expand_more' }}</mat-icon>
+      {{ showDetails ? 'Moins' : 'Détails' }}
+    </button>
+    
+    <button 
+      mat-raised-button 
+      color="accent"
+      (click)="addToCart()"
+      [disabled]="isAddingToCart"
+      class="add-to-cart-btn"
+      [attr.aria-label]="(isInCart$ | async) ? 'Produit déjà dans le panier' : 'Ajouter le produit au panier'">
+      <mat-icon>{{ (isInCart$ | async) ? 'check' : 'add_shopping_cart' }}</mat-icon>
+      {{ (isInCart$ | async) ? 'Dans le panier' : 'Ajouter au panier' }}
+    </button>
+  </mat-card-actions>
+
+  <!-- Détails étendus -->
+  @if (showDetails) {
+    <div class="extended-details">
+      <mat-card-content>
+        @for (feature of article.features; track feature.title) {
+          <div class="features-detail">
+            <div class="feature-header">
+              <mat-icon>{{ feature.icon }}</mat-icon>
+              <strong>{{ feature.title }}</strong>
+            </div>
+            <p>{{ feature.description }}</p>
+          </div>
+        }
+      </mat-card-content>
+    </div>
+  }
+</mat-card>

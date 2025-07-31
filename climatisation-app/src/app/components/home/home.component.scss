@@ -1,0 +1,232 @@
+.home-container {
+  min-height: 100vh;
+  padding: 0;
+}
+
+// Section Hero
+.hero-section {
+  background: linear-gradient(135deg, #1976d2 0%, #42a5f5 100%);
+  color: white;
+  padding: 80px 20px;
+  text-align: center;
+
+  .hero-content {
+    max-width: 800px;
+    margin: 0 auto;
+
+    h1 {
+      font-size: 3.5rem;
+      font-weight: 300;
+      margin-bottom: 1rem;
+      letter-spacing: -0.02em;
+    }
+
+    .hero-subtitle {
+      font-size: 1.5rem;
+      margin-bottom: 2rem;
+      font-weight: 300;
+    }
+
+    .hero-description {
+      font-size: 1.1rem;
+      line-height: 1.6;
+      margin-bottom: 3rem;
+      opacity: 0.9;
+    }
+
+    .hero-actions {
+      button {
+        font-size: 1.1rem;
+        padding: 12px 32px;
+        
+        mat-icon {
+          margin-right: 8px;
+        }
+      }
+    }
+  }
+}
+
+// Section avantages
+.advantages-section {
+  padding: 80px 20px;
+  background-color: #f5f5f5;
+
+  h2 {
+    text-align: center;
+    font-size: 2.5rem;
+    font-weight: 300;
+    margin-bottom: 3rem;
+    color: #333;
+  }
+
+  .advantages-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+
+    .advantage-card {
+      text-align: center;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+      &:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+      }
+
+      mat-card-header {
+        justify-content: center;
+        margin-bottom: 1rem;
+
+        mat-icon[mat-card-avatar] {
+          font-size: 2rem;
+          width: 48px;
+          height: 48px;
+          line-height: 48px;
+          color: #1976d2;
+          background: transparent;
+        }
+
+        mat-card-title {
+          font-size: 1.3rem;
+          font-weight: 500;
+        }
+      }
+
+      mat-card-content {
+        font-size: 1rem;
+        line-height: 1.5;
+        color: #666;
+      }
+    }
+  }
+}
+
+// Section promotions
+.promotions-section {
+  padding: 80px 20px;
+
+  h2 {
+    text-align: center;
+    font-size: 2.5rem;
+    font-weight: 300;
+    margin-bottom: 1rem;
+    color: #333;
+  }
+
+  .section-subtitle {
+    text-align: center;
+    font-size: 1.2rem;
+    color: #666;
+    margin-bottom: 3rem;
+  }
+
+  .loading-container {
+    text-align: center;
+    padding: 4rem 0;
+
+    .loading-spinner {
+      font-size: 3rem;
+      width: 3rem;
+      height: 3rem;
+      animation: spin 2s linear infinite;
+      color: #1976d2;
+      margin-bottom: 1rem;
+    }
+
+    p {
+      font-size: 1.1rem;
+      color: #666;
+    }
+  }
+
+  .promotions-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 2rem;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  .no-promotions {
+    text-align: center;
+    padding: 4rem 0;
+    color: #666;
+
+    mat-icon {
+      font-size: 3rem;
+      width: 3rem;
+      height: 3rem;
+      margin-bottom: 1rem;
+    }
+
+    p {
+      font-size: 1.1rem;
+    }
+  }
+}
+
+// Section call-to-action
+.cta-section {
+  padding: 80px 20px;
+  background-color: #f5f5f5;
+
+  .cta-card {
+    max-width: 600px;
+    margin: 0 auto;
+    text-align: center;
+    padding: 2rem;
+
+    h3 {
+      font-size: 2rem;
+      font-weight: 400;
+      margin-bottom: 1rem;
+      color: #333;
+    }
+
+    p {
+      font-size: 1.1rem;
+      line-height: 1.6;
+      margin-bottom: 2rem;
+      color: #666;
+    }
+
+    button {
+      font-size: 1.1rem;
+      padding: 12px 32px;
+    }
+  }
+}
+
+// Animations
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+// Responsive
+@media (max-width: 768px) {
+  .hero-section {
+    padding: 60px 20px;
+
+    .hero-content {
+      h1 {
+        font-size: 2.5rem;
+      }
+
+      .hero-subtitle {
+        font-size: 1.2rem;
+      }
+    }
+  }
+
+  .advantages-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .promotions-grid {
+    grid-template-columns: 1fr;
+  }
+}

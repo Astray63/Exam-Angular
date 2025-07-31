@@ -1,0 +1,105 @@
+<div class="home-container">
+  <!-- Hero -->
+  <section class="hero-section">
+    <div class="hero-content">
+      <h1>Climatisation Pro</h1>
+      <p class="hero-subtitle">
+        Votre spécialiste en équipements de climatisation et ventilation
+      </p>
+      <p class="hero-description">
+        Depuis plus de 15 ans, nous proposons des solutions de climatisation 
+        et de ventilation adaptées à tous vos besoins. Que ce soit pour votre domicile 
+        ou votre entreprise, découvrez notre gamme complète de produits de qualité.
+      </p>
+      <div class="hero-actions">
+        <button mat-raised-button color="primary" routerLink="/catalog">
+          <mat-icon>storefront</mat-icon>
+          Découvrir nos produits
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Avantages -->
+  <section class="advantages-section">
+    <h2>Pourquoi nous choisir ?</h2>
+    <div class="advantages-grid">
+      <mat-card class="advantage-card">
+        <mat-card-header>
+          <mat-icon mat-card-avatar>verified</mat-icon>
+          <mat-card-title>Qualité garantie</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          Tous nos produits sont sélectionnés pour leur fiabilité et leur performance.
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card class="advantage-card">
+        <mat-card-header>
+          <mat-icon mat-card-avatar>local_shipping</mat-icon>
+          <mat-card-title>Livraison rapide</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          Livraison gratuite en 48h pour toute commande supérieure à 100€.
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card class="advantage-card">
+        <mat-card-header>
+          <mat-icon mat-card-avatar>support_agent</mat-icon>
+          <mat-card-title>Support expert</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          Notre équipe d'experts vous conseille dans le choix de vos équipements.
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </section>
+
+  <!-- Promotions -->
+  <section class="promotions-section">
+    <h2>Promotions en cours</h2>
+    <p class="section-subtitle">Profitez de nos offres exceptionnelles !</p>
+    
+    @if (isLoading) {
+      <div class="loading-container">
+        <mat-icon class="loading-spinner">autorenew</mat-icon>
+        <p>Chargement des promotions...</p>
+      </div>
+    }
+
+    @if (!isLoading) {
+      <div class="promotions-grid">
+        @for (article of promotionalArticles$ | async; track article.id) {
+          <app-article-card 
+            [article]="article"
+            [showPromoBadge]="true">
+          </app-article-card>
+        }
+      </div>
+    }
+
+    @if (!isLoading && (promotionalArticles$ | async)?.length === 0) {
+      <div class="no-promotions">
+        <mat-icon>info</mat-icon>
+        <p>Aucune promotion actuellement disponible</p>
+      </div>
+    }
+  </section>
+
+  <!-- Call-to-action -->
+  <section class="cta-section">
+    <mat-card class="cta-card">
+      <mat-card-content>
+        <h3>Prêt à équiper votre espace ?</h3>
+        <p>
+          Explorez notre catalogue complet et trouvez l'équipement parfait 
+          pour vos besoins en climatisation et ventilation.
+        </p>
+        <button mat-raised-button color="accent" routerLink="/catalog">
+          Voir tous nos produits
+        </button>
+      </mat-card-content>
+    </mat-card>
+  </section>
+</div>

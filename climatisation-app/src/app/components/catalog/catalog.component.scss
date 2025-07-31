@@ -1,0 +1,303 @@
+.catalog-container {
+  min-height: 100vh;
+  padding: 0 20px 40px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+// Header du catalogue
+.catalog-header {
+  text-align: center;
+  padding: 60px 0 40px;
+
+  h1 {
+    font-size: 3rem;
+    font-weight: 300;
+    color: #333;
+    margin-bottom: 1rem;
+  }
+
+  .catalog-subtitle {
+    font-size: 1.2rem;
+    color: #666;
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.5;
+  }
+}
+
+// Section des filtres
+.filters-section {
+  margin-bottom: 2rem;
+
+  .filters-card {
+    mat-card-header {
+      mat-card-title {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 1.2rem;
+
+        mat-icon {
+          color: #1976d2;
+        }
+      }
+    }
+
+    .filters-form {
+      .filters-row {
+        display: grid;
+        grid-template-columns: 1fr 200px auto;
+        gap: 1rem;
+        align-items: start;
+
+        .search-field {
+          min-width: 300px;
+        }
+
+        .category-field {
+          min-width: 200px;
+        }
+
+        .promo-filter {
+          display: flex;
+          align-items: center;
+          height: 56px; // Alignement avec les autres champs
+          
+          mat-checkbox {
+            .mat-mdc-checkbox {
+              --mdc-checkbox-selected-icon-color: #1976d2;
+              --mdc-checkbox-selected-hover-icon-color: #1565c0;
+            }
+          }
+        }
+      }
+
+      .filters-actions {
+        margin-top: 1rem;
+        display: flex;
+        justify-content: flex-end;
+
+        button {
+          mat-icon {
+            margin-right: 8px;
+          }
+        }
+      }
+    }
+  }
+}
+
+// Section des statistiques
+.stats-section {
+  margin-bottom: 2rem;
+
+  .stats-info {
+    display: flex;
+    justify-content: center;
+
+    mat-chip-set {
+      mat-chip {
+        font-size: 0.9rem;
+
+        mat-icon {
+          font-size: 16px;
+          width: 16px;
+          height: 16px;
+          margin-right: 6px;
+        }
+      }
+    }
+  }
+}
+
+// Section de chargement
+.loading-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 400px;
+
+  .loading-container {
+    text-align: center;
+
+    mat-spinner {
+      margin: 0 auto 2rem;
+    }
+
+    h3 {
+      font-size: 1.5rem;
+      font-weight: 400;
+      color: #333;
+      margin-bottom: 0.5rem;
+    }
+
+    p {
+      color: #666;
+      font-size: 1rem;
+    }
+  }
+}
+
+// Section des articles
+.articles-section {
+  .articles-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 2rem;
+    margin-bottom: 2rem;
+  }
+
+  .no-results {
+    text-align: center;
+    padding: 4rem 2rem;
+    color: #666;
+
+    mat-icon {
+      font-size: 4rem;
+      width: 4rem;
+      height: 4rem;
+      margin-bottom: 1rem;
+      color: #bbb;
+    }
+
+    h3 {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      color: #333;
+    }
+
+    p {
+      font-size: 1rem;
+      margin-bottom: 2rem;
+      max-width: 400px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    button {
+      font-size: 1rem;
+      padding: 12px 24px;
+    }
+  }
+}
+
+// Responsive Design
+@media (max-width: 1024px) {
+  .filters-form {
+    .filters-row {
+      grid-template-columns: 1fr;
+      gap: 1rem;
+
+      .search-field,
+      .category-field {
+        min-width: auto;
+        width: 100%;
+      }
+
+      .promo-filter {
+        height: auto;
+        padding: 1rem 0;
+      }
+    }
+  }
+
+  .articles-grid {
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .catalog-container {
+    padding: 0 15px 30px;
+  }
+
+  .catalog-header {
+    padding: 40px 0 30px;
+
+    h1 {
+      font-size: 2.5rem;
+    }
+
+    .catalog-subtitle {
+      font-size: 1.1rem;
+    }
+  }
+
+  .articles-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .filters-section {
+    .filters-card {
+      mat-card-content {
+        padding: 16px 8px;
+      }
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .catalog-header {
+    h1 {
+      font-size: 2rem;
+    }
+  }
+
+  .filters-form {
+    .filters-actions {
+      justify-content: center;
+    }
+  }
+
+  .no-results {
+    padding: 3rem 1rem;
+
+    mat-icon {
+      font-size: 3rem;
+      width: 3rem;
+      height: 3rem;
+    }
+
+    h3 {
+      font-size: 1.3rem;
+    }
+  }
+}
+
+// Animations personnalisées
+.filters-card {
+  transition: box-shadow 0.3s ease;
+
+  &:hover {
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+  }
+}
+
+// États des formulaires
+.filters-form {
+  .mat-mdc-form-field {
+    &.mat-focused {
+      .mdc-notched-outline {
+        --mdc-outlined-text-field-focus-outline-color: #1976d2;
+      }
+    }
+  }
+}
+
+// Amélioration de l'accessibilité
+.filters-form {
+  .mat-mdc-form-field {
+    .mdc-floating-label {
+      color: #666;
+    }
+  }
+
+  mat-checkbox {
+    .mdc-form-field {
+      color: #333;
+    }
+  }
+}

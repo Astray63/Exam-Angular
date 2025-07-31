@@ -1,0 +1,125 @@
+<mat-toolbar color="primary" class="navbar">
+  <div class="navbar-container">
+    <!-- Logo -->
+    <div class="navbar-brand" routerLink="/">
+      <mat-icon class="brand-icon">ac_unit</mat-icon>
+      <span class="brand-text">Climatisation Pro</span>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar-nav">
+      <a mat-button routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+        <mat-icon>home</mat-icon>
+        Accueil
+      </a>
+      <a mat-button routerLink="/catalog" routerLinkActive="active">
+        <mat-icon>storefront</mat-icon>
+        Catalogue
+      </a>
+    </nav>
+
+    <!-- Panier -->
+    <div class="navbar-actions">
+      <!-- Bouton panier -->
+      <button 
+        mat-icon-button 
+        [matMenuTriggerFor]="cartMenu"
+        class="cart-button"
+        [class.has-items]="((cartState$ | async)?.totalItems || 0) > 0">
+        <mat-icon 
+          [matBadge]="(cartState$ | async)?.totalItems || 0"
+          [matBadgeHidden]="(cartState$ | async)?.totalItems === 0"
+          matBadgeColor="accent"
+          matBadgeSize="small"
+          [attr.aria-hidden]="false"
+          [attr.aria-label]="'Panier avec ' + ((cartState$ | async)?.totalItems || 0) + ' article(s)'">
+          shopping_cart
+        </mat-icon>
+      </button>
+
+      <!-- Menu panier -->
+      <mat-menu #cartMenu="matMenu" class="cart-menu" xPosition="before">
+        <div class="cart-content" (click)="$event.stopPropagation()">
+          <!-- Header -->
+          <div class="cart-header">
+            <h3>
+              <mat-icon>shopping_cart</mat-icon>
+              Mon Panier
+            </h3>
+            <span class="cart-count">
+              {{ (cartState$ | async)?.totalItems || 0 }} article(s)
+            </span>
+          </div>
+
+          <mat-divider></mat-divider>
+
+          <!-- Articles -->
+          @if (((cartState$ | async)?.items?.length || 0) > 0) {
+            <div class="cart-items">
+              @for (item of (cartState$ | async)?.items; track item.article.id) {
+                <div class="cart-item">
+                  <div class="item-image">
+                    <img [src]="item.article.image" [alt]="item.article.title" loading="lazy">
+                  </div>
+                  
+                  <div class="item-details">
+                    <h4>{{ item.article.title }}</h4>
+                    <p class="item-category">{{ item.article.category | titlecase }}</p>
+                    <div class="item-price">
+                      {{ getItemPrice(item) | currency:'EUR':'symbol':'1.2-2':'fr-FR' }}
+                      <span class="item-quantity">x{{ item.quantity }}</span>
+                    </div>
+                  </div>
+
+                  <div class="item-actions">
+                    <button 
+                      mat-icon-button 
+                      (click)="removeFromCart(item.article.id)"
+                      matTooltip="Supprimer du panier"
+                      color="warn"
+                      class="remove-btn">
+                      <mat-icon>delete</mat-icon>
+                    </button>
+                  </div>
+                </div>
+              }
+            </div>
+          } @else {
+            <!-- Panier vide -->
+            <div class="empty-cart">
+              <mat-icon>shopping_cart</mat-icon>
+              <p>Votre panier est vide</p>
+              <button mat-button color="primary" routerLink="/catalog" (click)="closeCartMenu()">
+                Découvrir nos produits
+              </button>
+            </div>
+          }
+
+          <!-- Total -->
+          @if (((cartState$ | async)?.items?.length || 0) > 0) {
+            <div class="cart-footer">
+              <mat-divider></mat-divider>
+              
+              <div class="cart-total">
+                <strong>
+                  Total: {{ (cartState$ | async)?.totalPrice | currency:'EUR':'symbol':'1.2-2':'fr-FR' }}
+                </strong>
+              </div>
+
+              <div class="cart-actions">
+                <button mat-button (click)="clearCart()">
+                  <mat-icon>clear_all</mat-icon>
+                  Vider le panier
+                </button>
+                <button mat-raised-button color="accent" disabled>
+                  <mat-icon>payment</mat-icon>
+                  Commander
+                </button>
+              </div>
+            </div>
+          }
+        </div>
+      </mat-menu>
+    </div>
+  </div>
+</mat-toolbar>
