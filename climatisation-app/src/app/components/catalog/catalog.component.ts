@@ -11,8 +11,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatChipsModule } from '@angular/material/chips';
 
-import { Observable, combineLatest, Subject } from 'rxjs';
-import { map, startWith, takeUntil, debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { Observable, combineLatest, Subject, of } from 'rxjs';
+import { map, startWith, takeUntil, debounceTime, distinctUntilChanged, switchMap, catchError } from 'rxjs/operators';
 
 import { Article } from '../../models/article.interface';
 import { ArticleService } from '../../services/article.service';
@@ -102,12 +102,21 @@ export class CatalogComponent implements OnInit, OnDestroy {
       takeUntil(this.destroy$)
     );
 
-    // Combine les articles et les filtres
+    // Combine les articles et les filtres avec gestion d'erreur
     this.filteredArticles$ = combineLatest([
-      this.articles$,
+      this.articles$.pipe(
+        catchError(() => of([])), // En cas d'erreur, retourne un tableau vide
+        startWith([]) // Commence avec un tableau vide
+      ),
       formValues$
     ]).pipe(
-      map(([articles, filters]) => this.applyFilters(articles, filters)),
+      map(([articles, filters]) => {
+        // S'assurer que les articles ne sont pas null/undefined
+        if (!articles || !Array.isArray(articles)) {
+          return [];
+        }
+        return this.applyFilters(articles, filters);
+      }),
       takeUntil(this.destroy$)
     );
 

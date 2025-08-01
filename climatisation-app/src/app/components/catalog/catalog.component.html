@@ -92,25 +92,28 @@
   <!-- Articles -->
   @if (!isLoading) {
     <section class="articles-section">
-      @if ((filteredArticles$ | async)!.length > 0) {
-        <div class="articles-grid">
-          @for (article of filteredArticles$ | async; track article.id) {
-            <app-article-card 
-              [article]="article"
-              [showPromoBadge]="true">
-            </app-article-card>
-          }
-        </div>
-      } @else {
-        <!-- Aucun résultat -->
-        <div class="no-results">
-          <mat-icon>search_off</mat-icon>
-          <h3>Aucun produit trouvé</h3>
-          <p>Essayez de modifier vos critères de recherche ou de supprimer certains filtres.</p>
-          <button mat-raised-button color="primary" (click)="resetFilters()">
-            Réinitialiser les filtres
-          </button>
-        </div>
+      @if (filteredArticles$ | async; as filteredArticles) {
+        @if (filteredArticles.length > 0) {
+          <div class="articles-grid">
+            @for (article of filteredArticles; track article.id) {
+              <app-article-card 
+                [article]="article"
+                [showPromoBadge]="true">
+              </app-article-card>
+            }
+          </div>
+        } @else {
+          <!-- Aucun résultat -->
+          <div class="no-results">
+            <mat-icon>search_off</mat-icon>
+            <h3>Aucun produit trouvé</h3>
+            <p>Essayez de modifier vos critères de recherche.</p>
+            <button mat-raised-button color="primary" (click)="resetFilters()">
+              <mat-icon>refresh</mat-icon>
+              Réinitialiser les filtres
+            </button>
+          </div>
+        }
       }
     </section>
   }

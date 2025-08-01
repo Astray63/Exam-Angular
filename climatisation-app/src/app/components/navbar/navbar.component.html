@@ -31,7 +31,7 @@
           [matBadgeHidden]="(cartState$ | async)?.totalItems === 0"
           matBadgeColor="accent"
           matBadgeSize="small"
-          [attr.aria-hidden]="false"
+          aria-hidden="false"
           [attr.aria-label]="'Panier avec ' + ((cartState$ | async)?.totalItems || 0) + ' article(s)'">
           shopping_cart
         </mat-icon>
